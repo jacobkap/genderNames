@@ -1,4 +1,6 @@
 globalVariables(".GenderQueryCheckCount")
+pkg.env <- new.env()
+
 
 #' Gender of Name API
 #'
@@ -38,7 +40,7 @@ genderName <- function(first_names) {
   api <- GET(paste("https://api.genderize.io/?name=",
                    first_names[1], sep = ""))
   assign(".GenderQueryCheckCount", api$headers$`x-rate-limit-remaining`,
-         envir = .GlobalEnv)
+         envir = pkg.env)
 
   # Check that it worked
   if (http_type(api) != "application/json") {
@@ -76,7 +78,7 @@ genderName <- function(first_names) {
                        first_names[i], sep = ""))
 
       assign(".GenderQueryCheckCount", api$headers$`x-rate-limit-remaining`,
-             envir = .GlobalEnv)
+             envir = pkg.env)
 
       if (http_type(api) != "application/json") {
         stop("API did not return json", call. = FALSE)
@@ -125,6 +127,12 @@ genderName <- function(first_names) {
 #'
 #' @examples
 #'
+#' # Gives number of checks remaining in the day
+#' genderNameQueryCheck()
+#'
+#' # If you run genderName again, it increments the number of
+#' # available checks down by 1.
+#' genderName("tom")
 #' genderNameQueryCheck()
 #'
 #' @import jsonlite
@@ -132,17 +140,17 @@ genderName <- function(first_names) {
 genderNameQueryCheck <- function() {
 
 
-  if (exists(".GenderQueryCheckCount", envir = .GlobalEnv)) {
-    message(.GenderQueryCheckCount,
+  if (exists(".GenderQueryCheckCount", envir = pkg.env)) {
+    message(get(".GenderQueryCheckCount", envir = pkg.env),
             " gender queries remaining today.")
   }
 
   else {
     api <- GET("https://api.genderize.io/?name=")
     assign(".GenderQueryCheckCount", api$headers$`x-rate-limit-remaining`,
-           envir = .GlobalEnv)
-    message(api$headers$`x-rate-limit-remaining`,
+           envir = pkg.env)
+    message(get(".GenderQueryCheckCount", envir = pkg.env),
             " gender queries remaining today.")
-    }
+  }
 }
 
