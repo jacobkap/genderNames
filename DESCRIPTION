@@ -1,7 +1,7 @@
 Package: genderNames
 Type: Package
-Title: Client for the Genderize API That Determines the Gender of Names
-Version: 0.1.0
+Title: Client for the Genderize API that Determines the Gender of Names
+Version: 0.1.1
 Authors@R: person("Jacob", "Kaplan", email = "jacobkap@sas.upenn.edu", role = c       ("aut", "cre"))
 Depends:
     R (>= 2.10)

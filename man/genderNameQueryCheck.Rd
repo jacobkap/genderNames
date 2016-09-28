@@ -15,6 +15,12 @@ Gender Name Query Check
 }
 \examples{
 
+# Gives number of checks remaining in the day
+genderNameQueryCheck()
+
+# If you run genderName again, it increments the number of
+# available checks down by 1.
+genderName("tom")
 genderNameQueryCheck()
 
 }
